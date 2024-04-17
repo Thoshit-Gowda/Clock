@@ -1,40 +1,68 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import Clock from 'react-live-clock';
-import { useTime } from 'react-timer-hook';
+import Link from 'next/link';
+import Style1 from "./style1";
+import Style2 from "./style2";
 
 export default function Home() {
 
-    const [hourDeg, setHourDeg] = useState(0);
-    const [minDeg, setMinDeg] = useState(0);
-    const [secDeg, setSecDeg] = useState(0);
+    const [style1, setStyle1] = useState(true);
+    const [day, setDay] = useState(" ");
+    const [date, setDate] = useState(" ");
+    const [year, setYear] = useState(" ");
 
-    const { seconds, minutes, hours } = useTime({ format: '24-hours' });
+    const dates = new Date();
 
     useEffect(() => {
-        setHourDeg(hours * 15);
-        setMinDeg(minutes * 6);
-        setSecDeg(seconds * 6);
-    }, [seconds])
 
-    const date = new Date;
+        switch (dates.getDay()) {
+            case 0:
+                setDay("Sunday");
+                break;
+            case 1:
+                setDay("Monday");
+                break;
+            case 2:
+                setDay("Tuesday");
+                break;
+            case 3:
+                setDay("Wednesday");
+                break;
+            case 4:
+                setDay("Thursday");
+                break;
+            case 5:
+                setDay("Friday");
+                break;
+            case 6:
+                setDay("Saturday");
+                break;
+        }
+        setDate(dates.getDate());
+        setYear(dates.getFullYear());
+    });
 
     return (
         <>
-            <main className=' bg-slate-900 flex flex-col justify-center items-center' style={{ height: "100dvh" }} >
-                <container className='h-96 w-full flex justify-center items-center'  >
-                    <div className=" outer rounded-full w-96 h-96 flex justify-center items-center border-8" style={{ background: "conic-gradient(red " + hourDeg + "deg,#0F172A 0deg)" }}>
-                        <div className=" rounded-full w-72 h-72 flex justify-center items-center border-8 " style={{ background: "conic-gradient(orange " + minDeg + "deg,#0F172A 0deg)" }}>
-                            <div className=" rounded-full w-48 h-48 flex justify-center items-center border-8" style={{ background: "conic-gradient(green " + secDeg + "deg,#0F172A 0deg)" }}>
-                                <div className=' bg-white border-8 rounded-full h-28 w-28 flex justify-center items-center' >
-                                    <Clock format={"HH:mm:ss"} ticking={true} className=' text-2xl' />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <header>
+                <Link href="/" className="mr-10">Home</Link>
+                {style1
+                    ? <button onClick={() => { setStyle1(false) }}>STYLE2</button>
+                    : <button onClick={() => { setStyle1(true) }}>STYLE1</button>
+                }
+            </header>
+            <main className=' bg-slate-900 flex flex-col sm:flex-row justify-center sm:justify-evenly items-center w-full h-screen'  >
+                <container className='h-96 flex justify-center items-center ml-5'  >
+                    {style1
+                        ? <Style1></Style1>
+                        : <Style2></Style2>}
                 </container>
-                <p className=" text-7xl text-white">{date.getDate()+" Tuesday, "+date.getFullYear()}</p>
+                <div>
+                    <p className=" text-7xl text-white">{date + " " + day + ","}</p>
+                    <p className=" text-5xl text-white">{year}</p>
+                </div>
             </main>
+
         </>
     );
 }

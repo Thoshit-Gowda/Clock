@@ -2,23 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+:root {
+  --color-bg: 118 8 243;
+  --color-text: 0 0 0;
+  --theme: dark;
 }
 
-.Timer{
-  background: linear-gradient(to bottom ,#000000,#0a3542);
-  height: 96.3dvh;
-}
-
-.square{
+.square {
   background: #0a3542;
 }
-.Display{
+.Display {
   background: #28829e;
-  width: 50dvw;
+}
+
+.AlarmPic {
+  animation-name: wobble;
+  animation-duration: 0.2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wobble {
+  0% {
+    translate: 1px;
+  }
+  25% {
+    rotate: 2deg;
+  }
+  75% {
+    rotate: -2deg;
+  }
+  100% {
+    translate: -1px;
+  }
+}
+
+.timerBg {
+  background: #8d8d8d;
+  height: 4.5rem;
+}
+
+.needle {
+  animation-name: rotate;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotate {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
 }
